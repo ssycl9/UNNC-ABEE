@@ -47,16 +47,16 @@ def run_one_parameter_parametric(eplus_run_path, idf_path, output_dir,
     output_paths = {}
     
     output_dir = output_paths
-    time = 1
+    t = 1
 
     for parameter_value in parameter_vals:
 
-        this_output_dir = output_dir + '/run_' + str(time)
+        this_output_dir = str(output_dir[parameter_vals]) + '/run_' + str(t)
         run_one_simulation_helper(eplus_run_path, idf_path,
                                 this_output_dir, parameter_key,
                                 parameter_value)
         output_paths[parameter_value] = this_output_dir + "/eplusout.csv"
         
-        time += 1
+        t += 1
     
     return output_paths
