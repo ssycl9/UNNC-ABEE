@@ -2,6 +2,7 @@
 # This file is for EnergyPlus parametric simulation
 import json
 import copy
+import os
 from StaticEplusEngine import run_eplus_model, convert_json_idf
 
 def run_one_simulation_helper(eplus_run_path, idf_path, output_dir,
@@ -45,16 +46,17 @@ def run_one_parameter_parametric(eplus_run_path, idf_path, output_dir,
     
     output_paths = {}
     
-    if not os.path.isdir(output_dir):
-        os.mkdir(output_dir)
-    for i in range(25):
-        this_output_dir = output_dir + str(i) + '/run'
+    output_dir = output_paths
+    time = 1
+
+    for parameter_value in parameter_vals:
+
+        this_output_dir = output_dir + '/run_' + str(time)
         run_one_simulation_helper(eplus_run_path, idf_path,
                                 this_output_dir, parameter_key,
-                                parameter_val[i])
-        output_paths[str(parameter_vals[i])] = this_output_dir + '/eplusout.csv'
+                                parameter_value)
+        output_paths[parameter_value] = this_output_dir + "/eplusout.csv"
+        
+        time += 1
     
     return output_paths
-
-
-    
