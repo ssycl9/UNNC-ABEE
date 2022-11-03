@@ -7,7 +7,9 @@ output_dir = 'param_exp_1'
 parameter_key = ['WindowMaterial:SimpleGlazingSystem',
                 'SimpleWindow:DOUBLE PANE WINDOW',
                 'solar_heat_gain_coefficient']
-parameter_vals=(i/100 for i in range(25, 75, 2))
+parameter_vals=list(range(25, 75, 2))
+for i in range(25):
+    parameter_vals[i]=parameter_vals[i]/100
 plot_column_name = 'Zone ONE:Zone Mean Air Temperature [C](TimeStep) '
 y_axis_title = 'Indoor Air Temperature (C)'
 plot_title = 'Simulation of Indoor Air Temperature vs. SHGC'
