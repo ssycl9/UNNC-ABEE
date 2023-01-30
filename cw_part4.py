@@ -76,3 +76,61 @@ def calculationU():
             g.set(str(int(k) - int(i) - 1))  # The quantity box value is reduced by one
             u = u + d / lambda_value  # u records the sum of the R's evaluated, and then assigns U to the reciprocal
         U = 1 / float(u)
+
+def input_Lambda_D():  # This function is used to obtain the values of d and λ for each input
+    global d
+    global lambda_value
+    d = float(D_label_entry.get())
+    lambda_value = float(Lambda_label_entry.get())
+    print(d)
+    print(lambda_value)
+    a.set('')  # The text boxes of a and b are assigned empty values
+    b.set('')
+
+
+def Uvalue():  # Used to assign a value to the U text box
+    if U != 0:
+        c.set(str(U))
+
+
+next_button = tk.Button(app, text='next', command=calculationU)  # next按钮，调用calculationU计算U
+next_button.place(x=290, y=40)
+
+b = tk.StringVar()
+Lambda_label = tk.Label(app, text='λ')
+Lambda_label.place(x=25, y=125)
+Lambda_label_entry = tk.Entry(app, width=30, textvariable=b)
+Lambda_label_entry.place(x=60, y=120, height=30)
+Lambda_button = tk.Button(app, text='Calculate', width=15, fg='red', command=Uvalue)  # next button, call calculationU to calculate U
+
+
+Lambda_button.place(x=300, y=100)
+
+c = tk.StringVar()
+U_label = tk.Label(app, text='U')
+U_label.place(x=25, y=160)
+U_entry = tk.Entry(app, width=30, state='readonly', textvariable=c)
+U_entry.place(x=60, y=160, height=30)
+
+
+def go(*args):  # Handle events, *args represents variable parameters, the function is drop-down box, choose manual input and file input
+    global button
+    if comboxlist.get() == 'File input':  # File input, manual input button failure
+        button = False
+        a.set('')
+        b.set('')
+        c.set('')
+        g.set('')
+    elif comboxlist.get() == 'Manual input':  # Manual input, file button failed
+        button = True
+    print(comboxlist.get())  # Prints the selected value
+
+
+comvalue = tk.StringVar()  # The text that comes with the form, creates a new value
+comboxlist = ttk.Combobox(app, textvariable=comvalue, state='readonly')  # initialization
+comboxlist["values"] = ("File input", "Manual input")  #Set the options for the drop-down box
+comboxlist.current(0)  # Choose the first one
+comboxlist.bind("<<ComboboxSelected>>", go)  # Bind event,(bind go() function when drop-down box is selected)
+comboxlist.place(x=330, y=45)
+
+app.mainloop()
